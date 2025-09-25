@@ -20,8 +20,8 @@ async def list_users(skip: int = 0, limit: int = 100):
     """
     Получить список пользователей с поддержкой пагинации.
 
-    - **skip**: Количество записей для пропуска
-    - **limit**: Максимальное количество записей для возврата
+    - skip: Количество записей для пропуска
+    - limit: Максимальное количество записей для возврата
     """
     users = db.get_all_users()[skip:skip + limit]
     return UserList(users=users, total=len(users))
@@ -40,7 +40,7 @@ async def get_user(user_id: int):
     """
     Получить информацию о конкретном пользователе по его ID.
 
-    - **user_id**: Уникальный идентификатор пользователя
+    - user_id: Уникальный идентификатор пользователя
     """
     user = db.get_user(user_id)
     if user is None:
@@ -65,10 +65,10 @@ async def create_user(user: UserCreate):
     """
     Создать нового пользователя.
 
-    - **name**: Имя пользователя (обязательно)
-    - **email**: Email пользователя (обязательно)
-    - **age**: Возраст пользователя (обязательно)
-    - **status**: Статус пользователя (по умолчанию: active)
+    - name: Имя пользователя (обязательно)
+    - email: Email пользователя (обязательно)
+    - age: Возраст пользователя (обязательно)
+    - status: Статус пользователя (по умолчанию: active)
     """
     return db.create_user(user)
 
@@ -86,8 +86,8 @@ async def update_user(user_id: int, user: UserCreate):
     """
     Полностью обновить данные пользователя.
 
-    - **user_id**: Уникальный идентификатор пользователя
-    - **Все поля пользователя**: Все поля должны быть переданы
+    - user_id: Уникальный идентификатор пользователя
+    - Все поля пользователя: Все поля должны быть переданы
     """
     updated_user = db.update_user(user_id, UserUpdate(**user.model_dump()))
     if updated_user is None:
@@ -111,8 +111,8 @@ async def partial_update_user(user_id: int, user_update: UserUpdate):
     """
     Частично обновить данные пользователя.
 
-    - **user_id**: Уникальный идентификатор пользователя
-    - **Любые поля пользователя**: Можно передать только те поля, которые нужно обновить
+    - user_id: Уникальный идентификатор пользователя
+    - Любые поля пользователя: Можно передать только те поля, которые нужно обновить
     """
     updated_user = db.update_user(user_id, user_update)
     if updated_user is None:
@@ -136,7 +136,7 @@ async def delete_user(user_id: int):
     """
     Удалить пользователя по ID.
 
-    - **user_id**: Уникальный идентификатор пользователя
+    - user_id: Уникальный идентификатор пользователя
     """
     if not db.delete_user(user_id):
         raise HTTPException(
